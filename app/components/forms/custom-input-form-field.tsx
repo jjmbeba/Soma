@@ -10,9 +10,10 @@ type Props = {
     inputType?: React.HTMLInputTypeAttribute;
     placeholder?: string;
     labelSibling?: React.ReactNode;
+    isSubmitPending:boolean;
 }
 
-const CustomInputFormField = ({form, label, name, inputType = 'text', placeholder = '', labelSibling}: Props) => {
+const CustomInputFormField = ({form, label, name, inputType = 'text', placeholder = '', labelSibling, isSubmitPending = false}: Props) => {
     return (
         <FormField
             control={form.control}
@@ -28,7 +29,7 @@ const CustomInputFormField = ({form, label, name, inputType = 'text', placeholde
                         </FormDescription>
                     </div>
                     <FormControl>
-                        <Input placeholder={placeholder} type={inputType} {...field} />
+                        <Input disabled={isSubmitPending} placeholder={placeholder} type={inputType} {...field} />
                     </FormControl>
                     <FormMessage/>
                 </FormItem>

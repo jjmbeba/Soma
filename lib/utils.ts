@@ -3,6 +3,7 @@ import {twMerge} from "tailwind-merge";
 import {createClient} from "@/utils/supabase/server";
 import {redirect} from "next/navigation";
 import {z} from "zod";
+import type {UseMutateFunction} from "@tanstack/react-query"
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -22,11 +23,16 @@ export function redirectBasedOnUserStatus(isUserSignedIn: boolean) {
     }
 }
 
-type GenerateSubmitActionProps<T extends z.ZodSchema> = { schema: T, action: (formData: z.infer<T>) => Promise<never> }
+type GenerateSubmitActionProps<T extends z.ZodSchema, TInput> = { schema: T, action: UseMutateFunction <never, Error, TInput, unknown> }
 
-export function generateSubmitAction<T extends z.ZodSchema>({schema, action}: GenerateSubmitActionProps<T>) {
+export function generateSubmitAction<T extends z.ZodSchema>({schema, action}: GenerateSubmitActionProps<T, z.infer<T>>) {
     return (values: z.infer<T>) => {
         const parsedValues = schema.parse(values);
         return action( parsedValues);
     }
+}
+
+export function generateAvatarFallback(fullName:string){
+    const [firstName, lastName] = fullName.split(" ");
+    return `${firstName[0]}${lastName[0]}`;
 }

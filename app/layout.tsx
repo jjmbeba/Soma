@@ -6,6 +6,7 @@ import {ModeToggle} from "@/app/components/themes/ModeToggle";
 import React from "react";
 import AuthButtons from "@/app/components/auth/AuthButtons";
 import {Toaster} from "@/components/ui/sonner";
+import QueryProvider from "@/app/components/providers/QueryProvider";
 
 const defaultUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -36,25 +37,27 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-            <main className="min-h-screen flex flex-col items-center">
-                <div className="flex-1 w-full flex flex-col gap-20 items-center">
-                    <Navbar>
-                        <div className={'flex items-center gap-4'}>
-                            <ModeToggle/>
-                            <AuthButtons/>
+            <QueryProvider>
+                <main className="min-h-screen flex flex-col items-center">
+                    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+                        <Navbar>
+                            <div className={'flex items-center gap-4'}>
+                                <ModeToggle/>
+                                <AuthButtons/>
+                            </div>
+                            {/*Navlinks here*/}
+                        </Navbar>
+                        <div className="w-full flex flex-col gap-20">
+                            {children}
                         </div>
-                        {/*Navlinks here*/}
-                    </Navbar>
-                    <div className="w-full flex flex-col gap-20">
-                        {children}
+                        <footer
+                            className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
+                            {/* Footer here */}
+                        </footer>
                     </div>
-                    <footer
-                        className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                        {/* Footer here */}
-                    </footer>
-                </div>
-                <Toaster richColors />
-            </main>
+                    <Toaster richColors/>
+                </main>
+            </QueryProvider>
         </ThemeProvider>
         </body>
         </html>

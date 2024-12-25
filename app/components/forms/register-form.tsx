@@ -8,6 +8,7 @@ import FormHeader from "@/app/components/auth/FormHeader";
 import AuthAlternative from "@/app/components/auth/AuthAlternative";
 import CustomInputFormField from "@/app/components/forms/custom-input-form-field";
 import SubmitButton from "@/app/components/forms/SubmitButton";
+import {signUpAction} from "@/app/actions";
 
 export function RegisterForm() {
     const form = useCustomForm(registerSchema, {
@@ -16,7 +17,10 @@ export function RegisterForm() {
         confirmPassword: ""
     });
 
-    const onSubmit = generateSubmitAction(registerSchema);
+    const onSubmit = generateSubmitAction({
+        schema: registerSchema,
+        action: signUpAction
+    });
 
     return (
         <Form {...form}>

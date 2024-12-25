@@ -1,13 +1,14 @@
 "use server";
 
-import { encodedRedirect } from "@/utils/utils";
-import { createClient } from "@/utils/supabase/server";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import {encodedRedirect} from "@/utils/utils";
+import {createClient} from "@/utils/supabase/server";
+import {headers} from "next/headers";
+import {redirect} from "next/navigation";
+import {z} from "zod";
+import {loginSchema, registerSchema} from "@/schemas/auth";
 
-export const signUpAction = async (formData: FormData) => {
-  const email = formData.get("email")?.toString();
-  const password = formData.get("password")?.toString();
+export const signUpAction = async (formData: z.infer <typeof registerSchema>) => {
+  const {email, password} = formData;
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
@@ -39,9 +40,8 @@ export const signUpAction = async (formData: FormData) => {
   }
 };
 
-export const signInAction = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+export const signInAction = async (formData: z.infer<typeof loginSchema>) => {
+  const {password, email} = formData;
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({

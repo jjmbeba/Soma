@@ -9,6 +9,7 @@ import AuthAlternative from "@/app/components/auth/AuthAlternative";
 import FormHeader from "@/app/components/auth/FormHeader";
 import CustomInputFormField from "@/app/components/forms/custom-input-form-field";
 import SubmitButton from "@/app/components/forms/SubmitButton";
+import {signInAction} from "@/app/actions";
 
 export function LoginForm() {
     const form = useCustomForm(loginSchema, {
@@ -16,7 +17,10 @@ export function LoginForm() {
         password: ""
     });
 
-    const onSubmit = generateSubmitAction(loginSchema);
+    const onSubmit = generateSubmitAction({
+        schema: loginSchema,
+        action: signInAction
+    });
 
     return (
         <Form {...form}>

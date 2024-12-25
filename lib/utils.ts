@@ -22,8 +22,11 @@ export function redirectBasedOnUserStatus(isUserSignedIn: boolean) {
     }
 }
 
-export function generateSubmitAction(schema: z.ZodSchema) {
-    return (values: z.infer<typeof schema>) => {
-        console.log(values);
+type GenerateSubmitActionProps<T extends z.ZodSchema> = { schema: T, action: (formData: z.infer<T>) => Promise<never> }
+
+export function generateSubmitAction<T extends z.ZodSchema>({schema, action}: GenerateSubmitActionProps<T>) {
+    return (values: z.infer<T>) => {
+        const parsedValues = schema.parse(values);
+        return action( parsedValues);
     }
 }

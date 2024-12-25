@@ -5,6 +5,7 @@ import Navbar from "@/app/components/navigation/Navbar";
 import {ModeToggle} from "@/app/components/themes/ModeToggle";
 import React from "react";
 import AuthButtons from "@/app/components/auth/AuthButtons";
+import {Toaster} from "@/components/ui/sonner";
 
 const defaultUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -52,6 +53,7 @@ export default function RootLayout({
                         {/* Footer here */}
                     </footer>
                 </div>
+                <Toaster richColors />
             </main>
         </ThemeProvider>
         </body>

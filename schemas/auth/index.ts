@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import type {Session} from "@supabase/supabase-js";
 
 export const loginSchema = z.object({
     email: z.string().email(),
@@ -16,3 +17,14 @@ export const registerSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
+
+export type AuthResponse = {
+    success: boolean;
+    data: {
+        user: {
+            email: string;
+            id: string;
+        } | null;
+        session: Session | null;
+    };
+};

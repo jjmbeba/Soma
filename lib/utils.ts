@@ -23,13 +23,26 @@ export function redirectBasedOnUserStatus(isUserSignedIn: boolean) {
     }
 }
 
-type GenerateSubmitActionProps<T extends z.ZodSchema, TInput> = { schema: T, action: UseMutateFunction <never, Error, TInput, unknown> }
+type GenerateSubmitActionProps<
+    T extends z.ZodSchema,
+    TResponse = any, // The response type from the mutation
+    TInput = z.infer<T> // The input type derived from the schema
+> = {
+    schema: T;
+    action: UseMutateFunction<TResponse, Error, TInput, unknown>;
+};
 
-export function generateSubmitAction<T extends z.ZodSchema>({schema, action}: GenerateSubmitActionProps<T, z.infer<T>>) {
+export function generateSubmitAction<
+    T extends z.ZodSchema,
+    TResponse = any
+>({
+      schema,
+      action,
+  }: GenerateSubmitActionProps<T, TResponse>) {
     return (values: z.infer<T>) => {
         const parsedValues = schema.parse(values);
-        return action( parsedValues);
-    }
+        return action(parsedValues);
+    };
 }
 
 export function generateAvatarFallback(fullName:string){

@@ -20,7 +20,7 @@ export const signUpAction = async (formData: z.infer<typeof registerSchema>) => 
         );
     }
 
-    const {error} = await supabase.auth.signUp({
+    const {error, data} = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -30,21 +30,17 @@ export const signUpAction = async (formData: z.infer<typeof registerSchema>) => 
 
     if (error) {
         console.error(error.code + " " + error.message);
-        return encodedRedirect("error", "/sign-up", error.message);
-    } else {
-        return encodedRedirect(
-            "success",
-            "/sign-up",
-            "Thanks for signing up! Please check your email for a verification link.",
-        );
+        throw new Error(error.message)
     }
+
+    return { success: true, data };
 };
 
 export const signInAction = async (formData: z.infer<typeof loginSchema>) => {
     const {password, email} = formData;
     const supabase = await createClient();
 
-    const {error} = await supabase.auth.signInWithPassword({
+    const {error, data} = await supabase.auth.signInWithPassword({
         email,
         password,
     });
@@ -53,7 +49,7 @@ export const signInAction = async (formData: z.infer<typeof loginSchema>) => {
         throw new Error(error.message)
     }
 
-    return redirect("/dashboard");
+    return {success:true, data};
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {

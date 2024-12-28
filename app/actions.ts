@@ -6,6 +6,7 @@ import {headers} from "next/headers";
 import {redirect} from "next/navigation";
 import {z} from "zod";
 import {loginSchema, registerSchema} from "@/schemas/auth";
+import {prisma} from "@/utils/prisma";
 
 export const signUpAction = async (formData: z.infer<typeof registerSchema>) => {
     const {email, password} = formData;
@@ -33,7 +34,7 @@ export const signUpAction = async (formData: z.infer<typeof registerSchema>) => 
         throw new Error(error.message)
     }
 
-    return { success: true, data };
+    return {success: true, data};
 };
 
 export const signInAction = async (formData: z.infer<typeof loginSchema>) => {
@@ -49,7 +50,7 @@ export const signInAction = async (formData: z.infer<typeof loginSchema>) => {
         throw new Error(error.message)
     }
 
-    return {success:true, data};
+    return {success: true, data};
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
@@ -132,4 +133,17 @@ export const signOutAction = async () => {
 export const getUser = async () => {
     const supabase = await createClient();
     return supabase.auth.getUser();
+}
+
+export const getUserProfile = async () => {
+    const {data: {user}} = await getUser();
+    if (!user?.id) {
+        return null;
+    }
+
+    return prisma.profiles.findFirst({
+        where: {
+            id: user.id
+        }
+    });
 }

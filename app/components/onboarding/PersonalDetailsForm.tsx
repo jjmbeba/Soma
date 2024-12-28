@@ -23,6 +23,7 @@ const PersonalDetailsForm = () => {
                         id={register('firstName').name}
                         {...register('firstName')}
                         className="block w-full p-2 border rounded-md"
+                        placeholder={'John'}
                     />
                     {errors.firstName && (
                         <span className="text-sm text-destructive">
@@ -41,6 +42,7 @@ const PersonalDetailsForm = () => {
                         id={register('lastName').name}
                         {...register('lastName')}
                         className="block w-full p-2 border rounded-md"
+                        placeholder={'Doe'}
                     />
                     {errors.lastName && (
                         <span className="text-sm text-destructive">
@@ -59,8 +61,11 @@ const PersonalDetailsForm = () => {
                 <Input
                     id={register('imageUrl').name}
                     {...register('imageUrl')}
+                    type={'file'}
+                    multiple={false}
                     className="block w-full p-2 border rounded-md"
                 />
+
                 {errors.imageUrl && (
                     <span className="text-sm text-destructive">
             {errors.imageUrl.message}

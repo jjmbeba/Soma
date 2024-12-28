@@ -7,6 +7,9 @@ import React from "react";
 import AuthButtons from "@/app/components/auth/AuthButtons";
 import {Toaster} from "@/components/ui/sonner";
 import QueryProvider from "@/app/components/providers/QueryProvider";
+import {NextSSRPlugin} from "@uploadthing/react/next-ssr-plugin";
+import {extractRouterConfig} from "uploadthing/server";
+import {ourFileRouter} from "@/app/api/uploadthing/core";
 
 const defaultUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -48,6 +51,15 @@ export default function RootLayout({
                             {/*Navlinks here*/}
                         </Navbar>
                         <div className="w-full flex flex-col gap-20">
+                            <NextSSRPlugin
+                                /**
+                                 * The `extractRouterConfig` will extract **only** the route configs
+                                 * from the router to prevent additional information from being
+                                 * leaked to the client. The data passed to the client is the same
+                                 * as if you were to fetch `/api/uploadthing` directly.
+                                 */
+                                routerConfig={extractRouterConfig(ourFileRouter)}
+                            />
                             {children}
                         </div>
                         <footer

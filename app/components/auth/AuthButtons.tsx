@@ -2,7 +2,7 @@ import React from 'react'
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
-import {getUser, signOutAction} from "@/app/actions";
+import {getUserProfile, signOutAction} from "@/app/actions";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,17 +13,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const AuthButtons = async () => {
-    const {data: {user}} = await getUser();
+    const data = await getUserProfile();
 
     return (
         <>
-            {user?.email ? (
+            {data?.email ? (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Avatar className={'cursor-pointer'}>
-                            <AvatarImage src=""/>
+                            <AvatarImage src={data?.profile_image_url ?? ""}/>
                             <AvatarFallback>
-                                {user.email.charAt(0).toUpperCase()}
+                                {data?.email.charAt(0).toUpperCase()}
                             </AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>

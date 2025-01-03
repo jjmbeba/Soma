@@ -1,49 +1,76 @@
 import React from 'react'
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import type {Step} from '@stepperize/react'
+import { Button } from "@/components/ui/button"
+import { CheckCircle2, Circle } from 'lucide-react'
 
-type Props = {
-    step: Step,
-    index:number,
-    stepperCurrentIndex:number,
-    stepperCurrentId:string,
-    steps:Step[],
-    array:Array<any>,
-    navigate:Function
+interface StepperNavigationButtonProps {
+    stepperCurrentId: string
+    stepperCurrentIndex: number
+    array: any[]
+    index: number
+    steps: any[]
+    step: any
+    navigate: () => void
+    disabled: boolean
+    completed: boolean
 }
 
-const StepperNavigationButton = ({index, step, stepperCurrentIndex, stepperCurrentId, steps, array, navigate}:Props) => {
-     return (
-        <React.Fragment key={step.id}>
-            <li className="flex items-center gap-4 flex-shrink-0">
-                <Button
-                    type="button"
-                    role="tab"
-                    variant={
-                        index <= stepperCurrentIndex ? 'default' : 'secondary'
-                    }
-                    aria-current={
-                        stepperCurrentId === step.id ? 'step' : undefined
-                    }
-                    aria-posinset={index + 1}
-                    aria-setsize={steps.length}
-                    aria-selected={stepperCurrentId === step.id}
-                    className="flex size-10 items-center justify-center rounded-full"
-                    onClick={() => navigate(step.id)}
+const StepperNavigationButton = ({
+                                     stepperCurrentId,
+                                     stepperCurrentIndex,
+                                     array,
+                                     index,
+                                     steps,
+                                     step,
+                                     navigate,
+                                     disabled,
+                                     completed
+                                 }: StepperNavigationButtonProps) => {
+    return (
+        <li
+            key={step.id}
+            className={`flex items-center ${
+                index === array.length - 1 ? "w-full" : ""
+            }`}
+        >
+            <Button
+                variant="ghost"
+                className={`w-full border-b-4 rounded-none ${
+                    stepperCurrentId === step.id
+                        ? "border-primary"
+                        : "border-muted"
+                }`}
+                onClick={navigate}
+                disabled={disabled}
+            >
+                <span className="sr-only">{`Step ${index + 1} ${
+                    stepperCurrentIndex === index ? "(current)" : ""
+                }`}</span>
+                <span
+                    className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 ${
+                        stepperCurrentId === step.id
+                            ? "border-primary"
+                            : "border-muted"
+                    } ${completed ? "bg-primary text-primary-foreground" : ""}`}
                 >
-                    {index + 1}
-                </Button>
-                <span className="text-sm font-medium">{step.label}</span>
-            </li>
-            {index < array.length - 1 && (
-                <Separator
-                    className={`flex-1 ${
-                        index < stepperCurrentIndex ? 'bg-primary' : 'bg-muted'
-                    }`}
+                    {completed ? (
+                        <CheckCircle2 className="h-6 w-6" />
+                    ) : (
+                        <Circle className="h-6 w-6" />
+                    )}
+                </span>
+                <span className="ml-4 text-sm font-medium">
+                    {step.label}
+                </span>
+            </Button>
+            {index < array.length - 1 ? (
+                <div
+                    className="hidden h-0.5 w-full bg-gray-200 lg:block"
+                    aria-hidden="true"
                 />
-            )}
-        </React.Fragment>
+            ) : null}
+        </li>
     )
 }
+
 export default StepperNavigationButton
+

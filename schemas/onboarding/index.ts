@@ -34,3 +34,9 @@ export type ChildrenDetailsValues = z.infer<typeof childrenDetailSchema>;
 export const completeSchema = z.object({});
 
 export type CompleteValues = z.infer<typeof completeSchema>;
+
+export type StepperSchema = [
+    { id: "personal"; label: "Personal Details"; schema: typeof personalDetailsSchema },
+    { id: "children"; label: "Children Details"; schema: typeof childrenDetailSchema },
+    { id: "complete"; label: "Complete"; schema: typeof completeSchema }
+];

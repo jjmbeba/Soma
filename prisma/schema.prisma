@@ -428,6 +428,7 @@ model students {
   class_id       BigInt?
   created_at     DateTime?        @default(now()) @db.Timestamptz(6)
   updated_at     DateTime?        @default(now()) @db.Timestamptz(6)
+  date_of_birth  DateTime         @db.Date
   goals          goals[]
   parent_student parent_student[]
   results        results[]

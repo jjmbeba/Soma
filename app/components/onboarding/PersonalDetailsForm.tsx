@@ -71,7 +71,7 @@ const PersonalDetailsForm = () => {
                     type="file"
                     onChange={handleFileChange}
                     accept="image/jpeg,image/png,image/webp"
-                    className="block w-full p-2 border rounded-md"
+                    className="block w-full p-2 border rounded-md hover:cursor-pointer"
                 />
                 {errors.imageUrl && (
                     <span className="text-sm text-destructive">

@@ -8,7 +8,7 @@ type Props = {
     endpoint:string,
     errorMessage?: string,
     successMessage?: string,
-    onSuccessAction: () => void
+    onSuccessAction: () => void,
 }
 
 export const usePostOnboarding = ({mutationKey, schema, endpoint, errorMessage, successMessage, onSuccessAction}:Props) => {

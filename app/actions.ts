@@ -144,6 +144,9 @@ export const getUserProfile = async () => {
     return prisma.profiles.findFirst({
         where: {
             id: user.id
+        },
+        include:{
+            roles:true
         }
     });
 }

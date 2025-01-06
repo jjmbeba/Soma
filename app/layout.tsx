@@ -43,13 +43,6 @@ export default function RootLayout({
             <QueryProvider>
                 <main className="min-h-screen flex flex-col items-center">
                     <div className="flex-1 w-full flex flex-col gap-20 items-center">
-                        <Navbar>
-                            <div className={'flex items-center gap-4'}>
-                                <ModeToggle/>
-                                <AuthButtons/>
-                            </div>
-                            {/*Navlinks here*/}
-                        </Navbar>
                         <div className="w-full flex flex-col gap-20">
                             <NextSSRPlugin
                                 /**
@@ -62,10 +55,6 @@ export default function RootLayout({
                             />
                             {children}
                         </div>
-                        <footer
-                            className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                            {/* Footer here */}
-                        </footer>
                     </div>
                     <Toaster richColors/>
                 </main>

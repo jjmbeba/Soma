@@ -7,7 +7,7 @@ import {
     Bot,
     Command,
     Frame,
-    GalleryVerticalEnd, Loader,
+    GalleryVerticalEnd, Goal, Loader,
     Map,
     PieChart,
     Settings2,
@@ -31,11 +31,6 @@ import {useIsMobile} from "@/hooks/use-mobile";
 
 // This is sample data.
 const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
     teams: [
         {
             name: "Acme Inc",
@@ -55,46 +50,42 @@ const data = {
     ],
     navMain: [
         {
-            title: "Playground",
-            url: "#",
+            title: "Dashboard",
+            url: "/dashboard",
             icon: SquareTerminal,
             isActive: true,
             items: [
                 {
-                    title: "History",
-                    url: "#",
+                    title: "Overview",
+                    url: "/dashboard",
                 },
                 {
-                    title: "Starred",
-                    url: "#",
+                    title: "Results",
+                    url: "/dashboard/results",
                 },
                 {
-                    title: "Settings",
-                    url: "#",
+                    title: "Notifications",
+                    url: "/dashboard/notifications",
                 },
             ],
         },
         {
-            title: "Models",
+            title: "Goals",
             url: "#",
-            icon: Bot,
+            icon: Goal,
             items: [
                 {
-                    title: "Genesis",
-                    url: "#",
+                    title: "Overview",
+                    url: "/goals",
                 },
                 {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
+                    title: "Add / Update goals",
                     url: "#",
                 },
             ],
         },
         {
-            title: "Documentation",
+            title: "Help",
             url: "#",
             icon: BookOpen,
             items: [
@@ -118,24 +109,12 @@ const data = {
         },
         {
             title: "Settings",
-            url: "#",
+            url: "/settings",
             icon: Settings2,
             items: [
                 {
-                    title: "General",
-                    url: "#",
-                },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-                {
-                    title: "Limits",
-                    url: "#",
+                    title: "Profile",
+                    url: "/profile",
                 },
             ],
         },

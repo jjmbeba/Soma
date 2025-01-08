@@ -10,21 +10,25 @@ import {
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import {usePathname} from "next/navigation";
+import {capitalize} from "@/utils/utils";
 
 const PageBreadCrumbs = () => {
     const parentPathname = usePathname().split('/')[1];
+    const childPathname = usePathname().split('/')[2] ?? 'Overview';
 
     return (
         <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink href={`/${parentPathname}`}>
-                        {parentPathname.slice(0, 1).toUpperCase() + parentPathname.slice(1)}
+                        {capitalize(parentPathname)}
                     </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                    <BreadcrumbPage>
+                        {capitalize(childPathname)}
+                    </BreadcrumbPage>
                 </BreadcrumbItem>
             </BreadcrumbList>
         </Breadcrumb>

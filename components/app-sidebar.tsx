@@ -1,58 +1,23 @@
 "use client"
 
 import * as React from "react"
-import {
-    AudioWaveform,
-    BookOpen,
-    Bot,
-    Command,
-    Frame,
-    GalleryVerticalEnd, Goal, Loader,
-    Map,
-    PieChart,
-    Settings2,
-    SquareTerminal,
-} from "lucide-react"
+import {Calendar, Goal, LayoutDashboard, Loader, MessagesSquare,} from "lucide-react"
 
 import {NavMain} from "@/components/nav-main"
-import {NavProjects} from "@/components/nav-projects"
 import {NavUser} from "@/components/nav-user"
-import {TeamSwitcher} from "@/components/team-switcher"
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarRail,
-} from "@/components/ui/sidebar"
-import {getUserProfile} from "@/app/actions";
+import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail,} from "@/components/ui/sidebar"
 import useProfile from "@/hooks/useProfile";
 import {useIsMobile} from "@/hooks/use-mobile";
+import Logo from "@/app/components/navigation/Logo";
+import {ModeToggle} from "@/app/components/themes/ModeToggle";
 
 // This is sample data.
 const data = {
-    teams: [
-        {
-            name: "Acme Inc",
-            logo: GalleryVerticalEnd,
-            plan: "Enterprise",
-        },
-        {
-            name: "Acme Corp.",
-            logo: AudioWaveform,
-            plan: "Startup",
-        },
-        {
-            name: "Evil Corp.",
-            logo: Command,
-            plan: "Free",
-        },
-    ],
     navMain: [
         {
             title: "Dashboard",
             url: "/dashboard",
-            icon: SquareTerminal,
+            icon: LayoutDashboard,
             isActive: true,
             items: [
                 {
@@ -64,8 +29,8 @@ const data = {
                     url: "/dashboard/results",
                 },
                 {
-                    title: "Notifications",
-                    url: "/dashboard/notifications",
+                    title: "Children",
+                    url: "/dashboard/children",
                 },
             ],
         },
@@ -85,56 +50,29 @@ const data = {
             ],
         },
         {
-            title: "Help",
-            url: "#",
-            icon: BookOpen,
+            title: "Notifications",
+            url: "/notifications",
+            icon: MessagesSquare,
             items: [
                 {
-                    title: "Introduction",
-                    url: "#",
+                    title: "Overview",
+                    url:"/notifications"
                 },
                 {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-                {
-                    title: "Changelog",
-                    url: "#",
-                },
-            ],
+                    title: "Chat",
+                    url:"/notifications/chat"
+                }
+            ]
         },
         {
-            title: "Settings",
-            url: "/settings",
-            icon: Settings2,
-            items: [
-                {
-                    title: "Profile",
-                    url: "/profile",
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: "Design Engineering",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "Sales & Marketing",
-            url: "#",
-            icon: PieChart,
-        },
-        {
-            name: "Travel",
-            url: "#",
-            icon: Map,
-        },
+            title: "Calendar",
+            url: "/calendar",
+            icon: Calendar,
+            items:[{
+                title:"Overview",
+                url:"/calendar"
+            }]
+        }
     ],
 }
 
@@ -145,13 +83,17 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                <TeamSwitcher teams={data.teams}/>
+                <div className={''}>
+                    <Logo/>
+                </div>
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain}/>
-                <NavProjects projects={data.projects}/>
             </SidebarContent>
             <SidebarFooter>
+                <div className={'flex items-center justify-end'}>
+                    <ModeToggle/>
+                </div>
                 {isProfileLoading ? (
                     <div className={'flex items-center gap-4 text-xs'}>
                         <Loader className={'animate-spin h-4 w-4'}/>
@@ -163,7 +105,7 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
                     <NavUser user={{
                     name: `${profile?.first_name} ${profile?.last_name}`,
                     email: profile?.email!,
-                    avatar: profile?.profile_image_url ?? '',
+                    avatar: profile?.profile_image_url ?? undefined,
                 }}/>)}
             </SidebarFooter>
             <SidebarRail/>

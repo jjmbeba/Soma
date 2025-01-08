@@ -14,3 +14,7 @@ export function encodedRedirect(
 ) {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 }
+
+export function capitalize(word:string){
+  return `${word.slice(0,1).toUpperCase()}${word.slice(1)}`
+}

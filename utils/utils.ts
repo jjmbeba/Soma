@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import {getUser} from "@/app/actions";
 
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
@@ -17,4 +18,14 @@ export function encodedRedirect(
 
 export function capitalize(word:string){
   return `${word.slice(0,1).toUpperCase()}${word.slice(1)}`
+}
+
+export async function getUserOrThrowError() {
+  const {data: {user}} = await getUser();
+
+  if (!user?.id) {
+    throw new Error("User not authenticated");
+  }
+
+  return user;
 }

@@ -11,7 +11,9 @@ export async function GET() {
         return NextResponse.json(serializedRoles);
     } catch (error) {
         console.error('Error fetching classes:', error);
-        return NextResponse.json({ error: 'Failed to fetch classes' }, { status: 500 });
+        return NextResponse.json({
+            error:  error instanceof Error ? error.message : "An unknown error has occurred"
+        }, { status: 500 });
     }
 }
 

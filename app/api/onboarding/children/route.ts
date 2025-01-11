@@ -103,7 +103,7 @@ export async function POST(
     } catch (error) {
         console.error(error)
         return NextResponse.json({
-            error,
+            error: error instanceof Error ? error.message : 'An unknown error has occurred',
             message: "Failed to save children details",
         }, {
             status: 500

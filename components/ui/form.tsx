@@ -44,7 +44,9 @@ const FormField = <
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
-  const { getFieldState, formState } = useFormContext()
+  const { getFieldState, formState } = useFormContext() ?? {};
+
+  if(!getFieldState || !formState) return null;
 
   const fieldState = getFieldState(fieldContext.name, formState)
 
@@ -90,7 +92,8 @@ const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
+  const { error, formItemId } = useFormField() ?? {};
+  if (!useFormField) return null;
 
   return (
     <Label
@@ -107,7 +110,8 @@ const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField() ?? {};
+  if (!useFormField) return null;
 
   return (
     <Slot
@@ -129,7 +133,8 @@ const FormDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => {
-  const { formDescriptionId } = useFormField()
+  const { formDescriptionId } = useFormField() ?? {};
+  if (!useFormField) return null;
 
   return (
     <p
@@ -146,7 +151,8 @@ const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
-  const { error, formMessageId } = useFormField()
+  const { error, formMessageId } = useFormField() ?? {};
+  if (!useFormField) return null;
   const body = error ? String(error?.message) : children
 
   if (!body) {
